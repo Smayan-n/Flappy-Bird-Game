@@ -1,7 +1,6 @@
 import pygame, sys, random, json, time
 pygame.init()
 
-
 class Powerup():
 	def __init__(self):
 		self.powerups = {}
@@ -31,8 +30,6 @@ class Powerup():
 
 			pygame.draw.circle(screen, (10, 10, 200), powerup, self.diameter)
 
-
-
 class Bird():
 	def __init__(self, x , y):
 		self.pos_x = x
@@ -49,8 +46,6 @@ class Bird():
 		self.circle_rad = self.diameter//2
 		self.animate_num = 0
 	
-
-
 	def draw(self):
 		#drawing hitbox
 		self.hitbox = (self.pos_x - self.diameter//2, self.pos_y - self.diameter//2, self.diameter, self.diameter)
@@ -84,9 +79,6 @@ class Bird():
 			self.pos_y += self.jump_vel
 			
 			self.const = 0.15
-
-		
-
 
 class Pipes():
 	def __init__(self):
@@ -136,8 +128,7 @@ class Pipes():
 
 			self.hitbox[key] = [pygame.Rect(x, 0, self.pipe_width, height1)
 									,pygame.Rect(x, screen_height, self.pipe_width, height2 * -1)]
-			
-			
+						
 			#drawing pipes --------- this part of code changed due to bottom pipes not being visible by previos code.
             
             #pygame.draw.rect(screen, (0, 207, 17), self.hitbox[key][0])#pipe 1
@@ -158,8 +149,6 @@ class Pipes():
 			if x > 480 and x < 484:
 				pipes.generate()
 
-
-
 gameOver = False
 k=0
 def collision():
@@ -176,37 +165,26 @@ def collision():
 				if bird.hitbox[0] + bird.diameter > powerup_hitbox[0] and bird.hitbox[0] < powerup_hitbox[0] + powerup.diameter:
 					
 					bird.immune = True
-					k+=1
-					
-
+					k+=1					
 		except:
 			pass
 							
-
 		#checking hitbox collisions between bird and all pipes(both bottom and top pipes)
 		if bird.hitbox[1] < pipe_hitbox1[3] and (bird.hitbox[0] + bird.diameter > pipe_hitbox1[0] 
 								and bird.hitbox[0] < pipe_hitbox1[0] + pipes.pipe_width):
 			gameOver = True
-
-
 
 		#calculate pipe 2 height from top
 		pipe2_height = screen_height - (pipe_hitbox2[3]*-1)
 		
 		if bird.hitbox[1] + bird.diameter > pipe2_height and (bird.hitbox[0] + bird.diameter > pipe_hitbox2[0]
 							and bird.hitbox[0] < pipe_hitbox1[0] +  pipes.pipe_width):
-	
 			gameOver = True
-
 
 		#checking if bird exits screen (top or bottom)
 		if bird.hitbox[1] + bird.diameter < 0 or bird.hitbox[1] > screen_height:
 			gameOver = True
 			bird.immune = False
-
-
-
-
 
 	if not(bird.immune):
 		if gameOver:
@@ -268,7 +246,6 @@ def collision():
 			gameOver = False
 
 
-
 def redrawGameWin():
 	
 	screen.blit(bg, (0,0))
@@ -318,7 +295,6 @@ except:
 font = pygame.font.SysFont('arial', 50, True)
 font2 = pygame.font.SysFont('arial', 25, True)
 
-
 #variable to determine if game started after loosing again or fresh start
 start_num = 0
 while True:
@@ -338,8 +314,6 @@ while True:
 			if event.key == pygame.K_SPACE:
 				bird.move()
 
-
-
 	keys = pygame.key.get_pressed()
 
 	#starting game by enter
@@ -350,8 +324,4 @@ while True:
 			if start_num != 0:
 				pipes.generate()
 
-
-
 	redrawGameWin()
-
-
